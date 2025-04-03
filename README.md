@@ -8,3 +8,5 @@ Some plugins are remove such as whichkey, gitsigns, LazyGit and etc.
 ```bash
 git clone https://github.com/RevimNeo/new ~/.config/nvim
 ```
+
+### Stable
