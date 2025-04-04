@@ -7,3 +7,7 @@ o.shiftwidth = 2
 o.expandtab = true
 o.smartindent = true
 o.termguicolors = true
+
+-- Disables the default startup.
+o.shortmess:append("I")
+------------------------------
