@@ -26,12 +26,13 @@ function M.transparency(api)
 end
 
 function M.default()
-  local api = vim.api
   require("config.lazy")
+  
+  local api = vim.api
+  M.transparency(api)
+
   require("neovim.options")
   require("neovim.keymaps")
-
-  M.transparency(api)
 end
 
 return M

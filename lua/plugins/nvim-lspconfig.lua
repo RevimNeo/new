@@ -32,7 +32,7 @@ return {
       map("n", "]d", vim.diagnostic.goto_next, opts)
     end
 
-    mason.setup {
+    mason.setup ({
       ui = {
         icons = {
           package_installed = "✓",
@@ -40,13 +40,17 @@ return {
           package_uninstalled = "✗",
         },
       },
-    }
+    })
 
-    mason_lspconfig.setup {
-      ensure_installed = { "lua_ls", "ts_ls", "emmet_language_server", "eslint", "pyright" },
-    }
+    mason_lspconfig.setup ({
+      ensure_installed = {
+        "lua_ls", "ts_ls",
+        "emmet_language_server", "eslint",
+        "pyright"
+      },
+    })
 
-    mason_lspconfig.setup_handlers {
+    mason_lspconfig.setup_handlers({
       function(server_name)
         local opts = {
           on_attach = on_attach,
@@ -57,22 +61,24 @@ return {
           local util = require("lspconfig.util")
           opts.settings = {
             Lua = {
-              runtime = { version = "LuaJIT" },
-              diagnostics = { globals = { "vim" } },
-              workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false,
+              diagnostics = {
+                globals = { "vim" },
               },
-              telemetry = { enable = false },
+              workspace = {
+                library = {
+                  vim.fn.expand "$VIMRUNTIME/lua",
+                  vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+                  "${3rd}/luv/library",
+                },
+                maxPreload = 100000,
+                preloadFileSize = 10000,
+              },
             },
           }
-          opts.root_dir = function(fname)
-            return util.find_git_ancestor(fname) or util.path.dirname(fname)
-          end
         end
 
         lsp_config[server_name].setup(opts)
       end,
-    }
-  end,
+    })
+  end
 }
