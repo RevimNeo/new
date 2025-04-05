@@ -52,24 +52,25 @@ return {
           on_attach = on_attach,
           capabilities = capabilities,
         }
+
         if server_name == "lua_ls" then
-          table.insert(opts, {
-            settings = {
-              Lua = {
-                runtime = { version = "LuaJIT" },
-                diagnostics = { globals = { "vim" } },
-                workspace = {
-                  library = vim.api.nvim_get_runtime_file("", true),
-                  checkThirdParty = false,
-                },
-                telemetry = { enable = false },
+          local util = require("lspconfig.util")
+          opts.settings = {
+            Lua = {
+              runtime = { version = "LuaJIT" },
+              diagnostics = { globals = { "vim" } },
+              workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
               },
+              telemetry = { enable = false },
             },
-            root_dir = function(fname)
-              return lspconfig.util.find_git_ancestor(fname) or lspconfig.util.path.dirname(fname)
-            end,
-          })
+          }
+          opts.root_dir = function(fname)
+            return util.find_git_ancestor(fname) or util.path.dirname(fname)
+          end
         end
+
         lsp_config[server_name].setup(opts)
       end,
     }
