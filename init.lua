@@ -1,3 +1,1 @@
-require("config.lazy")
-require("neovim.options")
-require("neovim.keymaps")
+require("revimrc").default()
