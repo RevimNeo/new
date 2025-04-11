@@ -1,12 +1,13 @@
 return {
   "echasnovski/mini.notify",
   version = '*',
-  config = function ()
+  config = function()
     local notify = require('mini.notify')
     notify.setup({
       window = {
         winblend = 0
-      }
+      },
+      background_colour = "#000000"
     })
 
     vim.notify = notify.make_notify({
