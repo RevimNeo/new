@@ -34,3 +34,8 @@ map("n", "<leader>qa", "<cmd>qa<CR>", opts)
 map("n", "<leader>Q", "<cmd>q!<CR>", opts)
 map("n", "<leader>QA", "<cmd>qa!<CR>", opts)
 ------------------------------
+--NOTE: Window esizing
+map('n', '<Up>', '<cmd>resize -2<CR>', opts)
+map('n', '<Down>', '<cmd>resize +2<CR>', opts)
+map('n', '<Left>', '<cmd>vertical resize -2<CR>', opts)
+map('n', '<Right>', '<cmd>vertical resize +2<CR>', opts)

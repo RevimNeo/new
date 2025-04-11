@@ -2,9 +2,10 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
+    local ok, _ = pcall(require, 'lualine.themes.' .. (vim.g.colors_name or ''))
     require("lualine").setup {
       options = {
-        theme = vim.g.colors_name or 'auto',
+        theme = ok and vim.g.colors_name or 'auto',
         icons_enabled = true,
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
