@@ -39,3 +39,7 @@ map('n', '<Up>', '<cmd>resize -2<CR>', opts)
 map('n', '<Down>', '<cmd>resize +2<CR>', opts)
 map('n', '<Left>', '<cmd>vertical resize -2<CR>', opts)
 map('n', '<Right>', '<cmd>vertical resize +2<CR>', opts)
+
+-- NOTE: Buffer close instead of <leader>q
+map('n', "<leader>bq", "<cmd>bd<CR>", opts)
+------------------------------
