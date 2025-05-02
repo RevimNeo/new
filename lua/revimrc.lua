@@ -1,9 +1,10 @@
 local M = {}
 
-M.revim_transparent = true
+M.revim_transparent = false
 
 function M.toggle_transparency()
   M.revim_transparent = not M.revim_transparent
+  vim.notify('Transparency toggled', vim.log.levels.INFO)
 end
 
 function M.transparency()
@@ -19,7 +20,7 @@ function M.transparency()
     vim.cmd("colorscheme " .. vim.g.colors_name)
   end
 
-  vim.keymap.set("n", "<leader>rt", function ()
+  vim.keymap.set("n", "<leader>rt", function()
     M.toggle_transparency()
     M.transparency()
   end, { desc = 'Toggle Revim transparency' })
@@ -27,7 +28,7 @@ end
 
 function M.default()
   require("config.lazy")
-  
+
   M.transparency()
 
   require("neovim.options")
