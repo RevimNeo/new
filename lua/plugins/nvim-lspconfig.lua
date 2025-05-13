@@ -32,7 +32,7 @@ return {
       map("n", "]d", vim.diagnostic.goto_next, opts)
     end
 
-    mason.setup ({
+    mason.setup({
       ui = {
         icons = {
           package_installed = "✓",
@@ -42,43 +42,73 @@ return {
       },
     })
 
-    mason_lspconfig.setup ({
+    mason_lspconfig.setup({
       ensure_installed = {
         "lua_ls", "ts_ls",
         "emmet_language_server", "eslint",
         "pyright"
       },
-    })
-
-    mason_lspconfig.setup_handlers({
-      function(server_name)
-        local opts = {
-          on_attach = on_attach,
-          capabilities = capabilities,
-        }
-
-        if server_name == "lua_ls" then
-          local util = require("lspconfig.util")
-          opts.settings = {
-            Lua = {
-              diagnostics = {
-                globals = { "vim" },
-              },
-              workspace = {
-                library = {
-                  vim.fn.expand "$VIMRUNTIME/lua",
-                  vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
-                  "${3rd}/luv/library",
-                },
-                maxPreload = 100000,
-                preloadFileSize = 10000,
-              },
-            },
+      handlers = {
+        function(server_name)
+          local opts = {
+            on_attach = on_attach,
+            capabilities = capabilities,
           }
-        end
 
-        lsp_config[server_name].setup(opts)
-      end,
+          if server_name == "lua_ls" then
+            local util = require("lspconfig.util")
+            opts.settings = {
+              Lua = {
+                diagnostics = {
+                  globals = { "vim" },
+                },
+                workspace = {
+                  library = {
+                    vim.fn.expand "$VIMRUNTIME/lua",
+                    vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+                    "${3rd}/luv/library",
+                  },
+                  maxPreload = 100000,
+                  preloadFileSize = 10000,
+                },
+              },
+            }
+          end
+
+          lsp_config[server_name].setup(opts)
+        end,
+      }
     })
+
+    -- mason_lspconfig.setup_handlers({
+    --   function(server_name)
+    --     local opts = {
+    --       on_attach = on_attach,
+    --       capabilities = capabilities,
+    --     }
+
+    --     if server_name == "lua_ls" then
+    --       local util = require("lspconfig.util")
+    --       opts.settings = {
+    --         Lua = {
+    --           diagnostics = {
+    --             globals = { "vim" },
+    --           },
+    --           workspace = {
+    --             library = {
+    --               vim.fn.expand "$VIMRUNTIME/lua",
+    --               vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+    --               "${3rd}/luv/library",
+    --             },
+    --             maxPreload = 100000,
+    --             preloadFileSize = 10000,
+    --           },
+    --         },
+    --       }
+    --     end
+
+    --     lsp_config[server_name].setup(opts)
+    --   end,
+    -- })
   end
 }
