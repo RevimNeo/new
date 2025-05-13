@@ -48,6 +48,7 @@ return {
         "emmet_language_server", "eslint",
         "pyright"
       },
+      automatic_installation = true,
       handlers = {
         function(server_name)
           local opts = {
@@ -55,13 +56,34 @@ return {
             capabilities = capabilities,
           }
 
-          if server_name == "lua_ls" then
-            local util = require("lspconfig.util")
-            opts.settings = {
+          -- if server_name == "lua_ls" then
+          --   local util = require("lspconfig.util")
+          --   opts.settings = {
+          --     Lua = {
+          --       diagnostics = {
+          --         globals = { "vim" },
+          --       },
+          --       workspace = {
+          --         library = {
+          --           vim.fn.expand "$VIMRUNTIME/lua",
+          --           vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
+          --           "${3rd}/luv/library",
+          --         },
+          --         maxPreload = 100000,
+          --         preloadFileSize = 10000,
+          --       },
+          --     },
+          --   }
+          -- end
+
+          lsp_config[server_name].setup(opts)
+        end,
+
+        ["lua_ls"] = function()
+          require("lspconfig").lua_ls.setup {
+            settings = {
               Lua = {
-                diagnostics = {
-                  globals = { "vim" },
-                },
+                diagnostics = { globals = { "vim" } },
                 workspace = {
                   library = {
                     vim.fn.expand "$VIMRUNTIME/lua",
@@ -72,10 +94,8 @@ return {
                   preloadFileSize = 10000,
                 },
               },
-            }
-          end
-
-          lsp_config[server_name].setup(opts)
+            },
+          }
         end,
       }
     })
